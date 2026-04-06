@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        </div>
+
+    <div class="main-content">
+        <div class="topbar">
+            <h2>Tổng quan</h2>
+            <div class="admin-info">
+                <span>🔔 Thông báo</span>
+                <strong>Chào, Admin Phương</strong>
+                <button class="btn-logout">Đăng xuất</button>
+            </div>
+        </div>
+
+        <div class="dashboard-cards">
+            <div class="card">
+                <h3>Tổng Sự Kiện</h3>
+                <div class="number" id="stat-events">0</div>
+            </div>
+            <div class="card">
+                <h3>Số Vé Đã Bán</h3>
+                <div class="number" id="stat-tickets">0</div>
+            </div>
+            <div class="card">
+                <h3>Tổng Doanh Thu</h3>
+                <div class="number" id="stat-revenue">0đ</div>
+            </div>
+            <div class="card">
+                <h3>Khách Hàng Mới</h3>
+                <div class="number" id="stat-users">0</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h3>Sự kiện sắp diễn ra</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tên sự kiện</th>
+                        <th>Ngày</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody id="upcoming-events-list">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 1. Tính toán số liệu giả lập cho thẻ Cards
+        document.getElementById('stat-events').innerText = Math.floor(Math.random() * 50) + 10;
+        document.getElementById('stat-tickets').innerText = Math.floor(Math.random() * 5000) + 500;
+        document.getElementById('stat-revenue').innerText = (Math.floor(Math.random() * 100) + 50) + " Triệu VNĐ";
+        document.getElementById('stat-users').innerText = Math.floor(Math.random() * 200) + 20;
+
+        // 2. Lấy dữ liệu sự kiện từ LocalStorage (hoặc mảng giả lập nếu chưa có)
+        const events = JSON.parse(localStorage.getItem('admin_events')) || [
+            { name: "Workshop Công Nghệ K24", date: "2026-04-10", status: "Sắp diễn ra" },
+            { name: "Đêm nhạc sinh viên", date: "2026-04-15", status: "Sắp diễn ra" }
+        ];
+
+        // 3. Render 5 sự kiện gần nhất
+        const tbody = document.getElementById('upcoming-events-list');
+        events.slice(0, 5).forEach(ev => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${ev.name}</td>
+                <td>${ev.date}</td>
+                <td><span style="color: green; font-weight: bold;">${ev.status || 'Đang mở bán'}</span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    </script>
+</body>
+</html>

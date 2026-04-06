@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticketbox Clone - Mua vé sự kiện trực tuyến</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* ================= CSS CƠ BẢN ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: #f4f7f6; color: #333; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ================= HEADER & NAVBAR ================= */
+        header { background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: all 0.3s ease; }
+        .sticky { position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .logo { font-size: 24px; font-weight: 700; color: #00b14f; }
+        
+        .main-menu { display: flex; gap: 20px; }
+        .main-menu li a { font-weight: 500; padding: 10px 0; transition: color 0.3s; }
+        .main-menu li a:hover { color: #00b14f; } /* Hover đổi màu */
+
+        .header-right { display: flex; align-items: center; gap: 15px; }
+        .search-icon { cursor: pointer; font-size: 20px; }
+        .btn-auth { background-color: #00b14f; color: white; padding: 8px 20px; border-radius: 4px; font-weight: 500; }
+        .btn-auth:hover { background-color: #009040; color: white; }
+
+        /* User Dropdown (Khi đã đăng nhập) */
+        .user-menu { display: none; position: relative; cursor: pointer; align-items: center; gap: 10px; }
+        .user-menu img { width: 35px; height: 35px; border-radius: 50%; }
+        .dropdown { display: none; position: absolute; top: 50px; right: 0; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-radius: 4px; width: 150px; overflow: hidden; }
+        .user-menu:hover .dropdown { display: block; }
+        .dropdown a { display: block; padding: 10px 15px; border-bottom: 1px solid #eee; }
+        .dropdown a:hover { background-color: #f9f9f9; color: #00b14f; }
+
+        /* ================= HERO SLIDER ================= */
+        .hero-slider { position: relative; width: 100%; height: 400px; overflow: hidden; background: #222; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s ease; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .slide.active { opacity: 1; z-index: 1; }
+        .slide::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); }
+        .slide-content { position: relative; z-index: 2; color: white; }
+        .slide-content h2 { font-size: 36px; margin-bottom: 20px; text-transform: uppercase; }
+        .slide-btn { background: #00b14f; color: white; padding: 12px 30px; font-size: 18px; border-radius: 4px; }
+        
+        .slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); font-size: 30px; color: white; background: rgba(0,0,0,0.5); border: none; padding: 10px 15px; cursor: pointer; z-index: 3; }
+        .slider-arrow.prev { left: 20px; }
+        .slider-arrow.next { right: 20px; }
+
+        /* ================= THANH TÌM KIẾM NHANH ================= */
+        .quick-search { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transform: translateY(-30px); position: relative; z-index: 10; display: flex; gap: 10px; }
+        .quick-search input, .quick-search select { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; }
+        .quick-search button { background: #00b14f; color: white; border: none; padding: 0 30px; font-size: 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
+        /* ================= DANH MỤC NỔI BẬT ================= */
+        .categories { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 50px; }
+        .cat-item { flex: 1; background: white; padding: 20px; text-align: center; border-radius: 8px; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        .cat-item:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,177,79,0.2); }
+        .cat-icon { font-size: 40px; margin-bottom: 10px; }
+        
+        /* ================= SỰ KIỆN HIGHLIGHT ================= */
+        .highlight-event { position: relative; border-radius: 12px; overflow: hidden; margin-bottom: 50px; height: 300px; display: flex; align-items: center; padding: 40px; color: white; background: url('https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&q=80&w=1200') center/cover; }
+        .highlight-event::after { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.2)); z-index: 1; }
+        .hl-content { position: relative; z-index: 2; max-width: 500px; }
+        .countdown { display: flex; gap: 15px; margin: 20px 0; }
+        .cd-box { background: rgba(0,177,79,0.8); padding: 10px; border-radius: 6px; text-align: center; min-width: 60px; font-weight: bold; }
+
+        /* ================= SỰ KIỆN SẮP TỚI (GRID) ================= */
+        .section-title { font-size: 28px; margin-bottom: 25px; border-left: 5px solid #00b14f; padding-left: 10px; }
+        .event-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 50px; }
+        .event-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.3s; cursor: pointer; }
+        .event-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .event-img { width: 100%; height: 160px; object-fit: cover; }
+        .event-info { padding: 15px; }
+        .event-info h3 { font-size: 16px; margin-bottom: 10px; height: 40px; overflow: hidden; }
+        .event-meta { font-size: 14px; color: #666; margin-bottom: 5px; }
+        .event-price { color: #00b14f; font-weight: bold; font-size: 18px; margin-top: 10px; }
+
+        /* ================= FOOTER ================= */
+        footer { background: #222; color: #aaa; padding: 50px 0 20px; margin-top: 50px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 30px; }
+        .footer-grid h4 { color: white; margin-bottom: 15px; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a:hover { color: #00b14f; }
+        .newsletter input { width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 4px; }
+        .newsletter button { background: #00b14f; color: white; border: none; padding: 10px; width: 100%; border-radius: 4px; cursor: pointer; }
+        .error-msg { color: #ff4d4f; font-size: 13px; display: none; }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">TICKETBOX</a>
+            
+            <nav>
+                <ul class="main-menu">
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li><a href="events.html?category=music">Concert Âm nhạc</a></li>
+                    <li><a href="events.html?category=sports">Thể thao</a></li>
+                    <li><a href="events.html?category=arts">Nghệ thuật & Workshop</a></li>
+                    <li><a href="events.html?category=others">Khác</a></li>
+                    <li><a href="calendar.html">Lịch sự kiện</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-right">
+                <span class="search-icon">🔍</span>
+                
+                <a href="login.html" class="btn-auth" id="btn-login">Đăng nhập / Đăng ký</a>
+                
+                <div class="user-menu" id="user-menu">
+                    <img src="https://ui-avatars.com/api/?name=User&background=00b14f&color=fff" alt="Avatar">
+                    <span id="user-name">Tài khoản ▼</span>
+                    <div class="dropdown">
+                        <a href="dashboard.html">Vé của tôi</a>
+                        <a href="dashboard.html">Sự kiện yêu thích</a>
+                        <a href="dashboard.html">Hồ sơ cá nhân</a>
+                        <a href="#" id="btn-logout">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-slider" id="slider" 
+             style="background: url('https://images.unsplash.com/photo-1540039155732-d68241511059?auto=format&fit=crop&q=80&w=1200') center/cover;">
+        <div class="slide active" style="background: url('https://images.unsplash.com/photo-1470229722913-7c092bba1a1a?auto=format&fit=crop&q=80&w=1200') center/cover;">
+            <div class="slide-content">
+                <h2>Lễ Hội Âm Nhạc Gió Mùa 2026</h2>
+                <a href="event-detail.html" class="slide-btn">Mua vé ngay</a>
+            </div>
+        </div>
+        <div class="slide" style="background: url('https://images.unsplash.com/photo-1509824227185-9c5a01ceba0d?auto=format&fit=crop&q=80&w=1200') center/cover;">
+            <div class="slide-content">
+                <h2>Giải Đấu Thể Thao Mùa Hè</h2>
+                <a href="event-detail.html" class="slide-btn">Khám phá ngay</a>
+            </div>
+        </div>
+
+        <button class="slider-arrow prev" onclick="changeSlide(-1)">❮</button>
+        <button class="slider-arrow next" onclick="changeSlide(1)">❯</button>
+    </section>
+
+    <main class="container">
+        <form class="quick-search" id="quickSearchForm">
+            <input type="text" id="searchInput" placeholder="Tìm kiếm tên sự kiện, nghệ sĩ, địa điểm...">
+            <select id="categorySelect">
+                <option value="all">Tất cả danh mục</option>
+                <option value="music">Concert Âm nhạc</option>
+                <option value="sports">Thể thao</option>
+                <option value="arts">Nghệ thuật & Workshop</option>
+                <option value="others">Khác</option>
+            </select>
+            <button type="submit">TÌM KIẾM</button>
+        </form>
+
+        <div class="categories">
+            <div class="cat-item" onclick="window.location.href='events.html?category=music'">
+                <div class="cat-icon">🎸</div>
+                <h4>Concert Âm nhạc</h4>
+            </div>
+            <div class="cat-item" onclick="window.location.href='events.html?category=arts'">
+                <div class="cat-icon">🎨</div>
+                <h4>Workshop & Nghệ thuật</h4>
+            </div>
+            <div class="cat-item" onclick="window.location.href='events.html?category=sports'">
+                <div class="cat-icon">⚽</div>
+                <h4>Thể thao</h4>
+            </div>
+            <div class="cat-item" onclick="window.location.href='events.html?category=others'">
+                <div class="cat-icon">🎭</div>
+                <h4>Triển lãm / Khác</h4>
+            </div>
+        </div>
+
+        <section class="highlight-event">
+            <div class="hl-content">
+                <span style="background: #e74c3c; padding: 5px 10px; border-radius: 4px; font-size: 14px;">SỰ KIỆN HOT NHẤT</span>
+                <h2 style="font-size: 32px; margin: 15px 0;">Anh Trai Say Hi Concert 2026</h2>
+                <p>Đêm nhạc lớn nhất mùa hè với sự góp mặt của 30 nghệ sĩ hàng đầu. Đừng bỏ lỡ!</p>
+                <div class="countdown" id="countdown">
+                    <div class="cd-box"><span id="days">00</span><br>Ngày</div>
+                    <div class="cd-box"><span id="hours">00</span><br>Giờ</div>
+                    <div class="cd-box"><span id="minutes">00</span><br>Phút</div>
+                    <div class="cd-box"><span id="seconds">00</span><br>Giây</div>
+                </div>
+                <a href="event-detail.html" class="slide-btn">Đặt chỗ ngay</a>
+            </div>
+        </section>
+
+        <h2 class="section-title">Sự kiện sắp mở bán / Thịnh hành</h2>
+        <div class="event-grid">
+            <div class="event-card" onclick="window.location.href='event-detail.html'">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=400" class="event-img">
+                <div class="event-info">
+                    <h3>[Hà Nội] Nhạc hội mùa thu 2026</h3>
+                    <div class="event-meta">📅 15 Tháng 10, 2026</div>
+                    <div class="event-meta">📍 Cung thể thao Quần Ngựa</div>
+                    <div class="event-price">Từ 450.000 đ</div>
+                </div>
+            </div>
+            <div class="event-card" onclick="window.location.href='event-detail.html'">
+                <img src="https://images.unsplash.com/photo-1460518451285-83e025816bb6?auto=format&fit=crop&q=80&w=400" class="event-img">
+                <div class="event-info">
+                    <h3>Workshop Làm Gốm Thủ Công</h3>
+                    <div class="event-meta">📅 20 Tháng 08, 2026</div>
+                    <div class="event-meta">📍 Dế Garden, Quận 2</div>
+                    <div class="event-price">Từ 250.000 đ</div>
+                </div>
+            </div>
+            <div class="event-card" onclick="window.location.href='event-detail.html'">
+                <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=400" class="event-img">
+                <div class="event-info">
+                    <h3>Giải Bóng Rổ Sinh Viên VNU</h3>
+                    <div class="event-meta">📅 05 Tháng 09, 2026</div>
+                    <div class="event-meta">📍 Nhà thi đấu ĐHQG</div>
+                    <div class="event-price">Miễn phí</div>
+                </div>
+            </div>
+            <div class="event-card" onclick="window.location.href='event-detail.html'">
+                <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&q=80&w=400" class="event-img">
+                <div class="event-info">
+                    <h3>Triển Lãm Nghệ Thuật Đương Đại</h3>
+                    <div class="event-meta">📅 10 Tháng 11, 2026</div>
+                    <div class="event-meta">📍 Bảo tàng Mỹ Thuật</div>
+                    <div class="event-price">Từ 100.000 đ</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h2 class="logo" style="margin-bottom: 15px;">TICKETBOX</h2>
+                    <p>Nền tảng quản lý và phân phối vé sự kiện hàng đầu dành cho giới trẻ.</p>
+                </div>
+                <div>
+                    <h4>Khám phá</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Concert Âm nhạc</a></li>
+                        <li><a href="#">Nghệ thuật & Workshop</a></li>
+                        <li><a href="#">Lịch diễn</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Chính sách</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Câu hỏi thường gặp</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Đăng ký nhận tin</h4>
+                    <form id="newsletterForm" class="newsletter">
+                        <input type="text" id="emailInput" placeholder="Nhập email của bạn...">
+                        <div id="emailError" class="error-msg">Vui lòng nhập email hợp lệ (có chứa @)</div>
+                        <button type="submit">ĐĂNG KÝ NGAY</button>
+                    </form>
+                </div>
+            </div>
+            <div style="text-align: center; border-top: 1px solid #444; padding-top: 20px; font-size: 14px;">
+                © 2026 Ticketbox Clone Project. Designed for Web Development Class.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. STICKY NAVBAR KHI SCROLL
+        window.onscroll = function() {
+            const header = document.getElementById("header");
+            if (window.pageYOffset > 50) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        };
+
+        // 2. LOGIC KIỂM TRA ĐĂNG NHẬP (LOCAL STORAGE)
+        // MẸO ĐỂ TEST: Mở F12 (DevTools) -> Console -> Gõ: localStorage.setItem('currentUser', 'Phương') rồi enter và F5 trang web.
+        const currentUser = localStorage.getItem('currentUser');
+        if (currentUser) {
+            document.getElementById('btn-login').style.display = 'none'; // Ẩn nút đăng nhập
+            document.getElementById('user-menu').style.display = 'flex'; // Hiện menu avatar
+            document.getElementById('user-name').innerText

@@ -1,0 +1,314 @@
+ :root {
+    --primary-teal: #14b8a6;
+    --bg-header: #0f172a;
+    --bg-body: #f8fafc;
+    --white: #ffffff;
+    --text-main: #1e293b;
+    --text-sub: #475569;
+    --border-color: #e2e8f0;
+    --nav-link-color: #cbd5e1;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Header & Nav */
+.main-header {
+    background-color: var(--bg-header);
+    padding-top: 15px;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 15px;
+}
+
+.search-box {
+    display: flex;
+    background: var(--white);
+    border-radius: 4px;
+    flex: 0 1 450px;
+    overflow: hidden;
+    padding: 2px;
+}
+
+.search-box input {
+    border: none;
+    padding: 10px 15px;
+    flex-grow: 1;
+    outline: none;
+}
+
+.btn-search {
+    background: none;
+    border: none;
+    padding: 0 15px;
+    border-left: 1px solid var(--border-color);
+    cursor: pointer;
+    color: var(--text-sub);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: var(--white);
+}
+
+.btn-event {
+    background: var(--primary-teal);
+    color: var(--white);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+    font-size: 14px;
+}
+
+.nav-links a, .user-account {
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+/* Sub Navigation */
+.sub-nav {
+    background-color: #000000; /* Màu nền đen phía dưới header như ảnh */
+    padding: 12px 0;
+}
+
+.sub-nav ul {
+    display: flex;
+    list-style: none;
+    justify-content: flex-start;
+    gap: 25px;
+}
+
+.sub-nav ul li a {
+    color: var(--nav-link-color);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.3s;
+}
+
+.sub-nav ul li a:hover {
+    color: var(--primary-teal);
+}
+
+ body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f8fafc; /* General body background from requirement 1 */
+        }
+
+        /* Dark overall section background for the carousel area */
+        #ticketbox-promotions {
+            background-color: #1e1e1e; /* Match the dark gray background of the video frames */
+            padding: 20px 0;
+        }
+
+        /* Container to center content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Carousel/Slider wrapper */
+        .promotions-carousel {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        /* Carousel flex container for slides */
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            gap: 15px; /* Spacing between banners */
+        }
+
+        /* Individual slide/banner structure */
+        .carousel-item {
+            flex: 0 0 calc(50% - 15px); /* Show exactly two slides at a time, minus gaps */
+            border-radius: 10px;
+            overflow: hidden;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-size: cover;
+            background-position: center;
+            height: 350px; /* Adjust height based on observed ratio */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Specific style for the blue-themed underwater banner */
+        .underwater-banner {
+            background-image: linear-gradient(to bottom, #112d4d, #144a82, #1e70bf), url('path/to/underwater-pattern.png'); /* Add a water texture overlay if desired */
+            background-repeat: no-repeat;
+            padding: 20px;
+        }
+
+        /* Styling for content within the blue banner */
+        .underwater-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .underwater-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .artist-names {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .date-location {
+            font-size: 14px;
+        }
+
+        /* Specific style for the green Ticketbox guide banner */
+        .guide-banner {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%); /* Green gradient from initial prompt */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 20px;
+        }
+        
+        /* Grid overlay on the green banner */
+        .guide-banner::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(#ffffff0a 1px, transparent 1px),
+                linear-gradient(90deg, #ffffff0a 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Title and dog mascot elements on the green banner */
+        .guide-content {
+            text-align: center;
+            color: #ffffff;
+            z-index: 1;
+        }
+        .guide-logo {
+            font-weight: bold;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .guide-title {
+            font-size: 20px;
+            line-height: 1.4;
+            max-width: 80%;
+            margin: 0 auto 30px;
+        }
+        .guide-mascot-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+        }
+        /* Style for the yellow dog */
+        .guide-dog {
+            width: 100%;
+            height: 100%;
+            background-color: #ffd700;
+            border-radius: 50%;
+            border: 5px solid #ffffff;
+            /* In a real implementation, this would be an image of the mascot */
+            /* Use text as a placeholder */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+        }
+        /* Style for music notes */
+        .guide-notes {
+            position: absolute;
+            font-size: 30px;
+            color: #ffffff;
+        }
+        .note-1 { top: -10px; left: -10px; animation: bounce 1.5s infinite; }
+        .note-2 { bottom: -10px; right: -10px; animation: bounce 1.5s infinite 0.75s; }
+
+        /* The specific 'See details' button for the guide banner, replicating the exact hover effect */
+        .guide-btn {
+            background-color: #ffffff; /* White by default */
+            color: #14b8a6; /* Main teal accent color from requirement 1 */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+        }
+
+        /* The exact hover effect shown in image_15.png and image_16.png */
+        .guide-btn:hover {
+            background-color: rgba(20, 184, 166, 0.5); /* Semi-transparent light green */
+            color: #ffffff; /* Text changes to white */
+        }
+
+        /* Simple animation for notes */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Dots navigation styling based on observed video frames */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: #888; /* Gray by default */
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        /* Active dot style */
+        .dot.active {
+            background-color: #14b8a6; /* Green accent color */
+            transform: scale(1.2); /* Slightly larger */
+        }

@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+:root {
+    --mauchinh: #14b8a6; 
+    --mauphu: #475569; 
+    --maunen: #f8fafc; 
+    --maupanel: #ffffff; 
+    --mausidebar: #0f172a; 
+    --bovien: 8px; 
+    --dobong: 0 1px 3px rgba(0,0,0,0.1); 
+    --vien: 1px solid #e2e8f0; 
+
+}
+.container_or{
+    max-width: 1200px;
+    margin: 28px auto;
+    padding: 0 20px;
+
+}
+
+.card_or{
+    background-color: var(--maupanel);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px var(--mauchinh);
+    border-radius: var(--bovien);
+    box-shadow: var(--dobong); 
+    border: var(--vien);
+}
+
+table{
+    width: 100%;
+    font-family: "Inter", sans-serif;
+    border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 14px;
+}
+    
+th,td{
+    font-family: "Inter", sans-serif;
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+th{
+    background-color: var(--mauphu);
+    color: azure;
+    font-weight: 900;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+tr:hover{
+    background-color: #f0fdfa;
+}
+
+.status_or{
+    padding: 4px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.Completed{
+    background-color: #3cddba;
+    color: black;
+}
+.Pending{
+    background-color: #c4f5b3;
+    color: black;
+}
+.Delivered{
+    background-color: #caf841;
+    color: black;
+}
+.Canceled{
+    background-color: rgb(232, 76, 76);
+    color: black;
+}
+.btn_or{
+    padding: 6px 12px;
+    border: none;
+    background-color: var(--mauchinh);
+    color: black;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.btn_or:hover{
+    background-color: ;
+}
+
+footer{
+    text-align: center;
+}

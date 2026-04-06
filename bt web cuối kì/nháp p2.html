@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sự kiện - Ticketbox Clone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* ================= CSS CƠ BẢN ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: #121212; color: #fff; line-height: 1.6; } /* Dark theme nền đen */
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        /* ================= THANH TÌM KIẾM & BỘ LỌC ================= */
+        .filter-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #333; }
+        .search-title { color: #00b14f; font-size: 20px; font-weight: 500; }
+        
+        .filter-actions { display: flex; gap: 15px; align-items: center; }
+        
+        /* Nút dạng viên thuốc (Pill Button) */
+        .pill-btn { background-color: #333; color: white; border: none; padding: 10px 20px; border-radius: 30px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; position: relative; }
+        .pill-btn:hover { background-color: #444; }
+        .pill-btn.primary { background-color: #00b14f; color: white; }
+        .pill-btn.primary:hover { background-color: #009040; }
+        
+        /* Nút Tag Danh mục Active */
+        .active-tag { background-color: #00b14f; display: none; }
+        .active-tag .close-icon { background: rgba(255,255,255,0.2); border-radius: 50%; width: 20px; height: 20px; display: inline-flex; justify-content: center; align-items: center; margin-left: 5px; cursor: pointer; }
+        .active-tag .close-icon:hover { background: rgba(255,255,255,0.4); }
+
+        /* Dropdown Popup Bộ lọc */
+        .filter-dropdown { position: absolute; top: 120%; right: 0; background: #fff; color: #333; width: 300px; padding: 20px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); display: none; z-index: 100; text-align: left; cursor: default; }
+        .filter-dropdown h4 { margin-bottom: 10px; font-size: 14px; color: #666; }
+        .filter-dropdown select, .filter-dropdown input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .filter-dropdown .apply-btn { background: #00b14f; color: white; width: 100%; padding: 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        
+        /* Box chứa nút bộ lọc để định vị dropdown */
+        .filter-wrapper { position: relative; }
+
+        /* ================= DANH SÁCH SỰ KIỆN (GRID 4 CỘT) ================= */
+        .events-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        
+        /* Responsive cơ bản */
+        @media (max-width: 992px) { .events-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .events-grid { grid-template-columns: 1fr; } .filter-header { flex-direction: column; align-items: flex-start; gap: 15px; } }
+
+        /* Giao diện Thẻ sự kiện (Card) */
+        .event-card { background: #1e1e1e; border-radius: 8px; overflow: hidden; transition: transform 0.3s; cursor: pointer; border: 1px solid #333; }
+        .event-card:hover { transform: translateY(-5px); border-color: #00b14f; }
+        .event-img { width: 100%; height: 180px; object-fit: cover; }
+        .event-info { padding: 15px; }
+        .event-info h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; line-height: 1.4; height: 44px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .event-price { color: #00b14f; font-weight: bold; font-size: 16px; margin-bottom: 8px; }
+        .event-price.free { color: #ff4d4f; } /* Màu đỏ nếu miễn phí hoặc trạng thái khác */
+        .event-date { font-size: 14px; color: #aaa; display: flex; align-items: center; gap: 5px; }
+        .event-location { font-size: 13px; color: #888; margin-top: 5px; }
+        
+        /* Thông báo rỗng */
+        .empty-state { grid-column: 1 / -1; text-align: center; padding: 50px; color: #888; font-size: 18px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="filter-header">
+            <div class="search-title">Kết quả tìm kiếm:</div>
+            
+            <div class="filter-actions">
+                <div class="filter-wrapper">
+                    <button class="pill-btn" id="btn-date">
+                        📅 Tất cả các ngày ⌄
+                    </button>
+                </div>
+
+                <div class="filter-wrapper">
+                    <button class="pill-btn primary" id="btn-filter" onclick="toggleDropdown()">
+                        ⚲ Bộ lọc ⌄
+                    </button>
+                    <div class="filter-dropdown" id="filterDropdown">
+                        <h4>Địa điểm</h4>
+                        <select id="locationFilter">
+                            <option value="all">Tất cả địa điểm</option>
+                            <option value="Hà Nội">Hà Nội</option>
+                            <option value="TP.HCM">TP. Hồ Chí Minh</option>
+                            <option value="Đà Nẵng">Đà Nẵng</option>
+                        </select>
+
+                        <h4>Giá vé</h4>
+                        <select id="priceFilter">
+                            <option value="all">Tất cả mức giá</option>
+                            <option value="free">Miễn phí</option>
+                            <option value="paid">Trúng phí (>0đ)</option>
+                        </select>
+
+                        <button class="apply-btn" onclick="applyAdvancedFilters()">Áp dụng bộ lọc</button>
+                    </div>
+                </div>
+
+                <button class="pill-btn active-tag" id="activeCategoryTag">
+                    <span id="categoryName">Hội thảo & Workshop</span> 
+                    <span class="close-icon" onclick="clearCategoryFilter()">✕</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="events-grid" id="eventsGrid">
+            </div>
+    </div>
+
+    <script>
+        // 1. DATA GIẢ LẬP (MOCK DATA) - Mô phỏng dữ liệu LocalStorage
+        const dbEvents = [
+            { id: 1, title: "[DẾ GARDEN] Terrarium Workshop", category: "arts", price: 445000, date: "25 Tháng 03, 2026", location: "Hà Nội", img: "https://images.unsplash.com/photo-1460518451285-83e025816bb6?auto=format&fit=crop&q=80&w=400" },
+            { id: 2, title: "[DẾ GARDEN] Moss Frame Workshop", category: "arts", price: 450000, date: "26 Tháng 03, 2026", location: "TP.HCM", img: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=400" },
+            { id: 3, title: "Concert Anh Trai Say Hi - Đêm 1", category: "music", price: 1500000, date: "15 Tháng 05, 2026", location: "Hà Nội", img: "https://images.unsplash.com/photo-1470229722913-7c092bba1a1a?auto=format&fit=crop&q=80&w=400" },
+            { id: 4, title: "Giải Bóng Rổ Sinh Viên Toàn Quốc", category: "sports", price: 0, date: "10 Tháng 04, 2026", location: "Đà Nẵng", img: "https://images.unsplash.com/photo-1509824227185-9c5a01ceba0d?auto=format&fit=crop&q=80&w=400" },
+            { id: 5, title: "Talkshow: Tương lai của AI", category: "others", price: 150000, date: "20 Tháng 04, 2026", location: "TP.HCM", img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=400" },
+            { id: 6, title: "[LỚP HỌC] Stress Breaker Workshop", category: "arts", price: 375000, date: "28 Tháng 03, 2026", location: "Hà Nội", img: "https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&q=80&w=400" },
+        ];
+
+        // Ánh xạ mã category sang tiếng Việt
+        const categoryMap = {
+            "music": "Concert Âm nhạc",
+            "arts": "Hội thảo & Workshop",
+            "sports": "Thể thao",
+            "others": "Khác"
+        };
+
+        // Biến lưu trữ trạng thái bộ lọc hiện tại
+        let currentFilters = {
+            category: 'all',
+            location: 'all',
+            price: 'all'
+        };
+
+        // ================= LOGIC KHỞI TẠO =================
+        window.onload = function() {
+            // A. Bắt sự kiện: Đọc URL xem có truyền parameter '?category=...' không
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlCategory = urlParams.get('category');
+
+            if (urlCategory && categoryMap[urlCategory]) {
+                currentFilters.category = urlCategory;
+                
+                // Hiển thị Tag Active Danh mục
+                const tagElement = document.getElementById('activeCategoryTag');
+                document.getElementById('categoryName').innerText = categoryMap[urlCategory];
+                tagElement.style.display = 'inline-flex';
+            }
+
+            // Render lần đầu tiên
+            renderEvents();
+        };
+
+        // ================= LOGIC RENDER & LỌC ĐA ĐIỀU KIỆN =================
+        function renderEvents() {
+            const grid = document.getElementById('eventsGrid');
+            grid.innerHTML = ''; // Xóa sạch lưới cũ
+
+            // Lọc Chồng Lớp (Multi-condition)
+            const filteredEvents = dbEvents.filter(event => {
+                // 1. Lọc theo Danh mục
+                let matchCategory = true;
+                if (currentFilters.category !== 'all') {
+                    matchCategory = event.category === currentFilters.category;
+                }
+
+                // 2. Lọc theo Địa điểm
+                let matchLocation = true;
+                if (currentFilters.location !== 'all') {
+                    matchLocation = event.location === currentFilters.location;
+                }
+
+                // 3. Lọc theo Giá
+                let matchPrice = true;
+                if (currentFilters.price === 'free') {
+                    matchPrice = event.price === 0;
+                } else if (currentFilters.price === 'paid') {
+                    matchPrice = event.price > 0;
+                }
+
+                // Sự kiện phải thỏa mãn cả 3 điều kiện (AND logic)
+                return matchCategory && matchLocation && matchPrice;
+            });
+
+            // Nếu không có sự kiện nào
+            if (filteredEvents.length === 0) {
+                grid.innerHTML = `<div class="empty-state">Rất tiếc, không tìm thấy sự kiện nào phù hợp với bộ lọc của bạn.</div>`;
+                return;
+            }
+
+            // In dữ liệu ra màn hình
+            filteredEvents.forEach(event => {
+                // Định dạng tiền tệ VNĐ
+                const priceText = event.price === 0 ? "Miễn phí" : `Từ ${event.price.toLocaleString('vi-VN')}đ`;
+                const priceClass = event.price === 0 ? "event-price free" : "event-price";
