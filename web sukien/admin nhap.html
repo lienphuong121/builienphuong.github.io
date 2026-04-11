@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>admin-dashboard</title>
+    <title>admin nhap</title>
     <link rel="stylesheet" href="assets/css/bell-solid.png">
     <link rel="stylesheet" href="assets/css/admin.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -41,22 +41,22 @@
         <!-- Info number -->
         <section class="dash">
             <div class="card">
-                <div class="dash_value">
+                <div class="dash_value" id="total-revenue">
                     $1564
                 </div>
                 <div class="dash_label">
                     Tổng doanh thu
                 </div>
             </div>
-             <div class="card">
-                <div class="dash_value">
+            <div class="card">
+                <div class="dash_value" id="total-tickets">
                     24000
                 </div>
                 <div class="dash_label">
                     Số vé đã bán
                 </div>
             </div>
-             <div class="card">
+            <div class="card">
                 <div class="dash_value">
                     1000
                 </div>
@@ -64,8 +64,8 @@
                     Tổng sự kiện
                 </div>
             </div>
-             <div class="card">
-                <div class="dash_value">
+            <div class="card">
+                <div class="dash_value" id="new-customers">
                     14500
                 </div>
                 <div class="dash_label">
@@ -108,36 +108,22 @@
                 </thead>
                 <tbody id="full-order-list">
                     <tr>
-                        <td>#1234</td>
+                        <td>1234</td>
                         <td>Jessica</td>
                         <td>$35</td>
-                        <td>Complated</td>
-                        <td>26/03/2025</td>
+                        <td><span class="status_or Completed">Completed</span></td>
+                        <td>26/03/2026</td>
                         <td>Jessicabuscuthayhoa@meme.com</td>
+                        <td><button class="btn_or">View</button></td>
                     </tr>
                     <tr>
-                        <td>#1567</td>
+                        <td>1567</td>
                         <td>CongB</td>
                         <td>$36</td>
-                        <td>Pending</td>
-                        <td>26/03/2025</td>
-                        <td>congbeiuoi@atsh2025.com</th>
-                    </tr>
-                    <tr>
-                        <td>#1412</td>
-                        <td>Mason</td>
-                        <td>$29</td>
-                        <td>Complated</td>
-                        <td>26/03/2025</td>
-                        <td>bachstage@atsh2025.com</td>
-                    </tr>
-                    <tr>
-                        <td>#1110</td>
-                        <td>BRay</td>
-                        <td>$110</td>
-                        <td>Complated</td>
-                        <td>26/03/2025</td>
-                        <td>nhacuabao110@brayniac.com</td>
+                        <td><span class="status_or Completed">Completed</span></td>
+                        <td>26/03/2026</td>
+                        <td>congbeiuoi@atsh2025.com</td>
+                        <td><button class="btn_or">View</button></td>
                     </tr>
                 </tbody>
             </table>

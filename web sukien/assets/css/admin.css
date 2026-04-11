@@ -87,7 +87,6 @@ nav a:hover, nav a.active {
 }
 
 .Admin {
-   .Admin {
     display: inline-block; 
     padding: 6px 16px;     
     background-color: #14b8a6; 
@@ -99,7 +98,7 @@ nav a:hover, nav a.active {
     /* 2 dòng này giải quyết việc trào chữ ra ngoài */
     white-space: nowrap; 
     text-align: center;
-}
+
 }
 
 .icon-btn {
@@ -303,6 +302,77 @@ tr:hover td {
         .action-btn:hover {
             background-color: #f3f4f6;
         }
+
+/* DÁN THÊM VÀO CUỐI CÙNG CỦA FILE CSS */
+
+/* HIỆU ỨNG CHỚP XANH CHO DÒNG MỚI */
+.new-order-row {
+    animation: highlight-green 2.5s ease-out;
+}
+@keyframes highlight-green {
+    0% { background-color: #8ce99a; }
+    100% { background-color: transparent; }
+}
+
+/* DÁN ĐÈ LÊN ĐOẠN STYLE THANH THÔNG BÁO CŨ */
+#toast-notification {
+    position: fixed;
+    top: 100px; /* Đổi từ bottom thành top, cách header 100px */
+    right: 30px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    font-family: sans-serif;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 9999;
+}
+
+.toast-hidden {
+    opacity: 0;
+    transform: translateX(120%);
+    pointer-events: none;
+}
+.toast-show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Badge phân biệt cho trạng thái bảng Recent Order */
+.status-completed { color: #27ae60; font-weight: bold; }
+.status-pending { color: #f39c12; font-weight: bold; }
+
+
+
+/* DÁN VÀO CUỐI CÙNG FILE CSS NÀY */
+.new-order-row {
+    animation: highlight-green 2.5s ease-out;
+}
+@keyframes highlight-green {
+    0% { background-color: #8ce99a; }
+    100% { background-color: transparent; }
+}
+
+#toast-notification {
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    font-family: sans-serif;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 9999;
+}
+
+.toast-hidden { opacity: 0; transform: translateX(120%); pointer-events: none; }
+.toast-show { opacity: 1; transform: translateX(0); }
+
+
+
 
 /* ================= FOOTER ================= */
 footer {
