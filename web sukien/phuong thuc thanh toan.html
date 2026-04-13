@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phương thức thanh toán - AURATIX</title>
+    <link rel="stylesheet" href="assets/css/khac.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* CSS viết thêm riêng cho trang đọc PDF này để không dính dáng file gốc */
+        .pdf-page-bg {
+            background-color: #f1f5f9; /* Nền xám nhạt để làm nổi bật khung PDF trắng */
+            padding: 30px 0 60px 0;
+            min-height: calc(100vh - 80px);
+        }
+        .pdf-wrapper {
+            background: var(--white);
+            height: 85vh; /* Chiều cao chiếm 85% màn hình */
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        /* Ẩn cái menu xổ xuống ở trang này cho gọn */
+        .sub-nav { display: none; } 
+    </style>
+</head>
+<body>
+    
+    <header class="main-header">
+        <div class="container top-bar">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="https://ticketbox.vn/static/images/logo-white.png" alt="AURATIX" height="35">
+                </a>
+            </div>
+            
+            <div class="search-box">
+                <input type="text" placeholder="Bạn tìm gì hôm nay?">
+                <button class="btn-search">Tìm kiếm</button>
+            </div>
+
+            <div class="header-actions">
+                <button class="btn-event">Tạo sự kiện</button>
+                <div class="nav-links">
+                    <a href="#"><i class="fa-solid fa-ticket"></i> Vé của tôi</a>
+                    
+                    <div class="user-account-wrapper" style="position: relative; display: flex; align-items: center;">
+                        <a href="#" class="user-title" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 5px; padding: 10px 0;">
+                            <i class="fa-solid fa-circle-user"></i> Tài khoản <i class="fa-solid fa-caret-down" style="font-size: 12px;"></i>
+                        </a>
+                        
+                        <ul class="dropdown-account">
+                            <li><a href="#"><i class="fa-regular fa-address-card" style="width: 20px;"></i> Thông tin cá nhân</a></li>
+                            <li><a href="#"><i class="fa-solid fa-clock-rotate-left" style="width: 20px;"></i> Lịch sử đặt vé</a></li>
+                            <li><a href="#"><i class="fa-solid fa-gear" style="width: 20px;"></i> Sự kiện của tôi</a></li>
+                            <li class="logout-line"><a href="#"><i class="fa-solid fa-arrow-right-from-bracket" style="width: 20px;"></i> Đăng xuất</a></li>
+                        </ul>
+                    </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pdf-page-bg">
+        <div class="container">
+            <div style="margin-bottom: 15px;">
+                <a href="index.html" style="color: var(--text-sub); text-decoration: none; font-size: 14px; font-weight: bold; display: flex; align-items: center; gap: 5px;">
+                    <i class="fa-solid fa-arrow-left"></i> Quay lại Trang chủ
+                </a>
+            </div>
+
+            <div class="pdf-wrapper">
+                <iframe src="assets/pdf/Phương thức thanh toán.pdf" width="100%" height="100%" style="border: none;" title="Quy chế hoạt động AURATIX"></iframe>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer" style="margin-top: 0;">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-col">
+                    <h4>Hotline</h4>
+                    <p><span><i class="fa-solid fa-phone"></i></span> Thứ 2 - Chủ Nhật (8:00 - 23:00)</p>
+                    <p class="hotline-number">1900.6408</p>
+
+                    <h4>Email</h4>
+                    <p><span><i class="fa-solid fa-envelope"></i></span> builienphuongsupport@auratix.vn</p>
+
+                    <h4>Văn phòng chính</h4>
+                    <p><span><i class="fa-solid fa-location-dot"></i></span> 200 Hàng Bông, Hoàn Kiếm, Hà Nội</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Dành cho Khách hàng</h4>
+                    <ul>
+                        <li><a href="DIEU KHOAN SU DUNG CHO KHACH HANG.html">Điều khoản sử dụng cho khách hàng</a></li>
+                    </ul>
+
+                    <h4>Dành cho Ban Tổ chức</h4>
+                    <ul>
+                        <li><a href="DIEU KHOAN SU DUNG CHO BTC.html">Điều khoản sử dụng cho ban tổ chức</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Về công ty chúng tôi</h4>
+                    <ul>
+                        <li><a href="quy che hoat dong.html">Quy chế hoạt động</a></li>
+                        <li><a href="chinh sach bao mat thong tin.html">Chính sách bảo mật thông tin</a></li>
+                        <li><a href="co che giai quyet tranh chap khieu nai.html">Cơ chế giải quyết tranh chấp/ khiếu nại</a></li>
+                        <li><a href="chinh sach bao mat thanh toan.html">Chính sách bảo mật thanh toán</a></li>
+                        <li><a href="chinh sach doi tra và kiem hang.html">Chính sách đổi trả và kiểm hàng</a></li>
+                        <li><a href="dieu kien van chuyen và giao hang.html">Điều kiện vận chuyển và giao nhận</a></li>
+                        <li><a href="phuong thuc thanh toan.html">Phương thức thanh toán</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="footer-divider">
+
+            <div class="footer-bottom">
+                <div class="footer-col">
+                    <h4>Ứng dụng AURATIX</h4>
+                    <div class="app-links">
+                        <a href="#"><i class="fa-brands fa-google-play"></i> Google Play</a>
+                        <a href="#"><i class="fa-brands fa-apple"></i> App Store</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Ứng dụng check-in cho Ban tổ chức</h4>
+                    <div class="app-links">
+                        <a href="#"><i class="fa-brands fa-google-play"></i> Google Play</a>
+                        <a href="#"><i class="fa-brands fa-apple"></i> App Store</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Follow us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

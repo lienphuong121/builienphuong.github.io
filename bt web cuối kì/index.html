@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticketbox Carousel Infinite</title>
+    <link rel="stylesheet" href="nhap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head> <body>
+    <header class="main-header">
+        <div class="container top-bar">
+            <div class="logo">
+                <img src="https://ticketbox.vn/static/images/logo-white.png" alt="Ticketbox" height="35">
+            </div>
+            
+            <div class="search-box">
+                <input type="text" placeholder="Bạn tìm gì hôm nay?">
+                <button class="btn-search">Tìm kiếm</button>
+            </div>
+            <div class="header-actions">
+                <button class="btn-event">Tạo sự kiện</button>
+            
+            <div class="nav-links">
+                <a href="#"><i class="fa-solid fa-ticket"></i> Vé của tôi</a>
+                
+                <div class="user-account-wrapper" style="position: relative; display: flex; align-items: center;">
+                    <a href="#" class="user-title" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 5px; padding: 10px 0;">
+                        <i class="fa-solid fa-circle-user"></i> Tài khoản <i class="fa-solid fa-caret-down" style="font-size: 12px;"></i>
+                    </a>
+                    
+                    <ul class="dropdown-account">
+                        <li><a href="#"><i class="fa-regular fa-address-card" style="width: 20px;"></i> Thông tin cá nhân</a></li>
+                        <li><a href="#"><i class="fa-solid fa-clock-rotate-left" style="width: 20px;"></i> Lịch sử đặt vé</a></li>
+                        <li><a href="#"><i class="fa-solid fa-gear" style="width: 20px;"></i> Sự kiện của tôi</a></li>
+                        <li class="logout-line"><a href="#"><i class="fa-solid fa-arrow-right-from-bracket" style="width: 20px;"></i> Đăng xuất</a></li>
+                    </ul>
+                </div>
+            </div>
+                <div class="lang-switch">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" alt="VN" width="20">
+                </div>
+            </div>
+        </div>
+
+        <nav class="sub-nav">
+            <div class="container">
+                <ul>
+                    <li><a href="Nhac song.html">Nhạc sống</a></li>
+                    <li><a href="San khau & Nghe thuat.html">Sân khấu & Nghệ thuật</a></li>
+                    <li><a href="The thao.html">Thể thao</a></li>
+                    <li><a href="The thao dien tu.html">Thể thao điện tử</a></li>
+                    <li><a href="Hoi thao & Workshop.html">Hội thảo & Workshop</a></li>
+                    <li><a href="Tham quan & Trai nghiem.html">Tham quan & Trải nghiệm</a></li>
+                    <li class="has-dropdown">
+                        <a href="#">
+                            Khác <i class="fa-solid fa-caret-down" style="font-size: 12px; margin-left: 3px;"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Tết</a></li>
+                            <li><a href="#">Valentine</a></li>
+                            <li><a href="#">30/4-1/5</a></li>
+                            <li><a href="#">Halloween</a></li>
+                            <li><a href="khac-christmas.html">Christmas</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Vé bán lại</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section id="ticketbox-slider">
+        <div class="container">
+            <div class="carousel-viewport">
+                <button class="nav-arrow prev-arrow" id="prevBtn">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="nav-arrow next-arrow" id="nextBtn">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-card bg-blue">
+                        <div class="card-content"><h3>Sự kiện 1: Băng Qua Đại Dương</h3><button class="btn-detail">Xem chi tiết</button></div>
+                    </div>
+                    <div class="carousel-card bg-green">
+                        <div class="card-content"><h3>Sự kiện 2: Cẩm Nang Ticketbox</h3><button class="btn-detail">Xem chi tiết</button></div>
+                    </div>
+                    <div class="carousel-card bg-dark">
+                        <div class="card-content"><h3>Sự kiện 3: Về Với Thanh Xuân</h3><button class="btn-detail">Xem chi tiết</button></div>
+                    </div>
+                    <div class="carousel-card bg-gray">
+                        <div class="card-content"><h3>Sự kiện 4: Concert Anh Trai</h3><button class="btn-detail">Xem chi tiết</button></div>
+                    </div>
+                    <div class="carousel-card bg-teal">
+                        <div class="card-content"><h3>Sự kiện 5: Nhạc Sống Sài Gòn</h3><button class="btn-detail">Xem chi tiết</button></div>
+                    </div>
+                    <div class="carousel-card bg-blue">
+                        <div class="card-content"><h3>Sự kiện 6: Workshop Nghệ Thuật</h3><button class="btn-detail">Xem chi tiết</button></div>
+                    </div>
+                    <div class="carousel-card bg-green">
+                        <div class="card-content"><h3>Sự kiện 7: Giải Chạy Marathon</h3><button class="btn-detail">Xem chi tiết</button></div>
+                    </div>
+                    <div class="carousel-card bg-dark">
+                        <div class="card-content"><h3>Sự kiện 8: Kịch Nói Đêm Đông</h3><button class="btn-detail">Xem chi tiết</button></div>
+                    </div>
+                    <div class="carousel-card bg-gray">
+                        <div class="card-content"><h3>Sự kiện 9: Festival Âm Nhạc</h3><button class="btn-detail">Xem chi tiết</button></div>
+                    </div>
+                    <div class="carousel-card bg-teal">
+                        <div class="card-content"><h3>Sự kiện 10: Đêm Nhạc Jazz</h3><button class="btn-detail">Xem chi tiết</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="dots-container" id="dotsContainer"></div>
+        </div>
+    </section>
+
+    <section class="event-section container">
+        <h2 class="section-title">Sự kiện đặc biệt</h2>
+        <div class="list-viewport">
+            <button class="nav-arrow prev-arrow list-prev"><i class="fa-solid fa-chevron-left"></i></button>
+            <div class="scroll-track">
+                <a href="trang-ban-ve-su-kien.html" style="text-decoration: none; color: inherit; display: block;">
+                    <div class="evt-card portrait">
+                        <div class="evt-img-placeholder bg-dark">Ảnh 1</div>
+                    </div>
+                </a>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 2</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-dark">Ảnh 3</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 4</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-dark">Ảnh 5</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 6</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 7</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 8</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 9</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 10</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 11</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 12</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 13</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 14</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 15</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 16</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 17</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 18</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 19</div></div>
+                <div class="evt-card portrait"><div class="evt-img-placeholder bg-gray">Ảnh 20</div></div>
+            </div>
+            <button class="nav-arrow next-arrow list-next"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <section class="event-section container">
+        <h2 class="section-title">Sự kiện xu hướng</h2>
+        <div class="list-viewport">
+            <button class="nav-arrow prev-arrow list-prev"><i class="fa-solid fa-chevron-left"></i></button>
+            <div class="scroll-track">
+                <div class="evt-card landscape"><div class="evt-img-placeholder bg-dark">Ảnh 1</div><span class="rank-number">1</span></div>
+                <div class="evt-card landscape"><div class="evt-img-placeholder bg-gray">Ảnh 2</div><span class="rank-number">2</span></div>
+                <div class="evt-card landscape"><div class="evt-img-placeholder bg-dark">Ảnh 3</div><span class="rank-number">3</span></div>
+                <div class="evt-card landscape"><div class="evt-img-placeholder bg-gray">Ảnh 4</div><span class="rank-number">4</span></div>
+                <div class="evt-card landscape"><div class="evt-img-placeholder bg-dark">Ảnh 5</div><span class="rank-number">5</span></div>
+                <div class="evt-card landscape"><div class="evt-img-placeholder bg-gray">Ảnh 6</div><span class="rank-number">6</span></div>
+                <div class="evt-card landscape"><div class="evt-img-placeholder bg-gray">Ảnh 7</div><span class="rank-number">7</span></div>
+                <div class="evt-card landscape"><div class="evt-img-placeholder bg-gray">Ảnh 8</div><span class="rank-number">8</span></div>
+                <div class="evt-card landscape"><div class="evt-img-placeholder bg-gray">Ảnh 9</div><span class="rank-number">9</span></div>
+                <div class="evt-card landscape"><div class="evt-img-placeholder bg-gray">Ảnh 10</div><span class="rank-number">10</span></div>
+            </div>
+            <button class="nav-arrow next-arrow list-next"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <section class="event-section container">
+        <h2 class="section-title">Gợi ý cho bạn</h2>
+        <div class="list-viewport st-viewport">
+            <button class="nav-arrow prev-arrow list-prev"><i class="fa-solid fa-chevron-left"></i></button>
+            <div class="scroll-track">
+                <div class="standard-card">
+                    <div class="st-img-wrapper">
+                        <div class="st-img placeholder-bg1">Ảnh Workshop</div>
+                    </div>
+                    <div class="st-info">
+                        <h3 class="st-title">[FLOWER 1969'S] WORKSHOP PERFUME - TRẢI NGHIỆM LÀM NƯỚC HOA XỊT</h3>
+                        <div class="st-price">Từ 279.000đ</div>
+                        <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 04 tháng 04, 2026</div>
+                    </div>
+                </div>
+
+                <div class="standard-card">
+                    <div class="st-img-wrapper">
+                        <div class="st-img placeholder-bg2">Ảnh Hòa nhạc</div>
+                    </div>
+                    <div class="st-info">
+                        <h3 class="st-title">[HBSO] HÒA NHẠC MÙA XUÂN | OPENING SEASON HBSO</h3>
+                        <div class="st-price">Từ 650.000đ</div>
+                        <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 14 tháng 03, 2026</div>
+                    </div>
+                </div>
+
+                <div class="standard-card">
+                    <div class="st-img-wrapper">
+                        <div class="st-img placeholder-bg3">Ảnh Kịch</div>
+                    </div>
+                    <div class="st-info">
+                        <h3 class="st-title">SKNT TRƯƠNG HÙNG MINH : CÂU ĐỨA ĐỦ XÀI</h3>
+                        <div class="st-price">Từ 300.000đ</div>
+                        <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 12 tháng 04, 2026</div>
+                    </div>
+                </div>
+
+                <div class="standard-card">
+                    <div class="st-img-wrapper">
+                        <div class="st-img placeholder-bg1">Ảnh Sự kiện 4</div>
+                    </div>
+                    <div class="st-info">
+                        <h3 class="st-title">B.DUCK CITYFUNS @VINCOM CENTER LANDMARK 81</h3>
+                        <div class="st-price">Từ 82.500đ</div>
+                        <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 04 tháng 04, 2026</div>
+                    </div>
+                </div>
+
+                <div class="standard-card">
+                    <div class="st-img-wrapper">
+                        <div class="st-img placeholder-bg2">Ảnh Sự kiện 5</div>
+                    </div>
+                    <div class="st-info">
+                        <h3 class="st-title">APLUS SAIGON PRESENTS: OLYMPE</h3>
+                        <div class="st-price">Từ 590.000đ</div>
+                        <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 07 tháng 03, 2026</div>
+                    </div>
+                </div>
+            </div>
+            <button class="nav-arrow next-arrow list-next"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </section>
+<!--hàng ko trượt-->
+    <section class="event-section container">
+        <div class="section-header-flex">
+            <h2 class="section-title">Nhạc Sống</h2>
+            <a href="Nhac song.html" class="see-more-link" title="Xem tất cả Nhạc sống">
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+        </div>
+        <div class="static-grid-4">
+            <div class="standard-card">
+                <div class="st-img-wrapper">
+                    <div class="st-img placeholder-bg1">Ảnh NEGAV</div>
+                </div>
+                <div class="st-info">
+                    <h3 class="st-title">1900 Future Hits #77: NEGAV | Friday 10.04.2026</h3>
+                    <div class="st-price">Từ 850.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 10 tháng 04, 2026</div>
+                </div>
+            </div>
+
+            <div class="standard-card">
+                <div class="st-img-wrapper">
+                    <div class="st-img placeholder-bg2">Ảnh Đàm Vĩnh Hưng</div>
+                </div>
+                <div class="st-info">
+                    <h3 class="st-title">HBAShow: Anh Say Rồi - Đàm Vĩnh Hưng</h3>
+                    <div class="st-price">Từ 800.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 25 tháng 04, 2026</div>
+                </div>
+            </div>
+
+            <div class="standard-card">
+                <div class="st-img-wrapper">
+                    <div class="st-img placeholder-bg3">Ảnh Sự kiện 3</div>
+                </div>
+                <div class="st-info">
+                    <h3 class="st-title">Tên sự kiện số 3 rất hấp dẫn tại Hà Nội</h3>
+                    <div class="st-price">Từ 500.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 01 tháng 05, 2026</div>
+                </div>
+            </div>
+
+            <div class="standard-card">
+                <div class="st-img-wrapper">
+                    <div class="st-img placeholder-bg1">Ảnh Sự kiện 4</div>
+                </div>
+                <div class="st-info">
+                    <h3 class="st-title">Tên sự kiện số 4 bùng nổ cuối tuần</h3>
+                    <div class="st-price">Từ 250.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 15 tháng 05, 2026</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="event-section container">
+        <div class="section-header-flex">
+            <h2 class="section-title">Sân khấu & Nghệ thuật</h2>
+            <a href="San khau & Nghe thuat.html" class="see-more-link" title="Xem tất cả Sân khấu & Nghệ thuật ">
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+        </div>
+        
+        <div class="static-grid-4">
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg1">Ảnh Nhạc Sống 1</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Đêm nhạc Acoustic Mùa Thu</h3>
+                    <div class="st-price">Từ 200.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 05 tháng 06, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg2">Ảnh Nhạc Sống 2</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Live in Hanoi: The Chill Night</h3>
+                    <div class="st-price">Từ 350.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 12 tháng 06, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg3">Ảnh Nhạc Sống 3</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Rock Show: Bùng Cháy Đam Mê</h3>
+                    <div class="st-price">Từ 500.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 20 tháng 06, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg1">Ảnh Nhạc Sống 4</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Minishow Ca sĩ Khách mời Đặc biệt</h3>
+                    <div class="st-price">Từ 800.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 25 tháng 06, 2026</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="event-section container">
+        <div class="section-header-flex">
+            <h2 class="section-title">Thể Thao</h2>
+            <a href="The thao.html" class="see-more-link" title="Xem tất cả Thể Thao">
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+        </div>
+        
+        <div class="static-grid-4">
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg2">Ảnh Sân Khấu 1</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Vở kịch: Lời Thề Bão Táp</h3>
+                    <div class="st-price">Từ 150.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 10 tháng 07, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg3">Ảnh Sân Khấu 2</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Múa Đương Đại: Nét Chấm Phá</h3>
+                    <div class="st-price">Từ 400.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 15 tháng 07, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg1">Ảnh Sân Khấu 3</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Hài Kịch Cuối Tuần: Cười Xuyên Việt</h3>
+                    <div class="st-price">Từ 200.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 22 tháng 07, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg2">Ảnh Sân Khấu 4</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Show Ảo Thuật Quốc Tế Bùng Nổ</h3>
+                    <div class="st-price">Từ 600.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 30 tháng 07, 2026</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <section class="event-section container">
+        <div class="section-header-flex">
+            <h2 class="section-title">Thể Thao Điện Tử</h2>
+            <a href="The thao dien tu.html" class="see-more-link" title="Xem tất cả Thể thao điện tử">
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+        </div>
+        
+        <div class="static-grid-4">
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg2">Ảnh Sân Khấu 1</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Vở kịch: Lời Thề Bão Táp</h3>
+                    <div class="st-price">Từ 150.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 10 tháng 07, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg3">Ảnh Sân Khấu 2</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Múa Đương Đại: Nét Chấm Phá</h3>
+                    <div class="st-price">Từ 400.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 15 tháng 07, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg1">Ảnh Sân Khấu 3</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Hài Kịch Cuối Tuần: Cười Xuyên Việt</h3>
+                    <div class="st-price">Từ 200.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 22 tháng 07, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg2">Ảnh Sân Khấu 4</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Show Ảo Thuật Quốc Tế Bùng Nổ</h3>
+                    <div class="st-price">Từ 600.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 30 tháng 07, 2026</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="event-section container">
+        <div class="section-header-flex">
+            <h2 class="section-title">Hội thảo & Workshop</h2>
+            <a href="Hoi thao & Workshop.html" class="see-more-link" title="Xem tất cả Hội thảo & Workshop">
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+        </div>
+        
+        <div class="static-grid-4">
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg1">Ảnh Nhạc Sống 1</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Đêm nhạc Acoustic Mùa Thu</h3>
+                    <div class="st-price">Từ 200.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 05 tháng 06, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg2">Ảnh Nhạc Sống 2</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Live in Hanoi: The Chill Night</h3>
+                    <div class="st-price">Từ 350.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 12 tháng 06, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg3">Ảnh Nhạc Sống 3</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Rock Show: Bùng Cháy Đam Mê</h3>
+                    <div class="st-price">Từ 500.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 20 tháng 06, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg1">Ảnh Nhạc Sống 4</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Minishow Ca sĩ Khách mời Đặc biệt</h3>
+                    <div class="st-price">Từ 800.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 25 tháng 06, 2026</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="event-section container">
+        <div class="section-header-flex">
+            <h2 class="section-title">Tham quan & Trải nghiệm</h2>
+            <a href="Tham quan & Trai nghiem.html" class="see-more-link" title="Xem tất cả Tham quan & Trải nghiệm">
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+        </div>
+        
+        <div class="static-grid-4">
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg2">Ảnh Sân Khấu 1</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Vở kịch: Lời Thề Bão Táp</h3>
+                    <div class="st-price">Từ 150.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 10 tháng 07, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg3">Ảnh Sân Khấu 2</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Múa Đương Đại: Nét Chấm Phá</h3>
+                    <div class="st-price">Từ 400.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 15 tháng 07, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg1">Ảnh Sân Khấu 3</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Hài Kịch Cuối Tuần: Cười Xuyên Việt</h3>
+                    <div class="st-price">Từ 200.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 22 tháng 07, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg2">Ảnh Sân Khấu 4</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Show Ảo Thuật Quốc Tế Bùng Nổ</h3>
+                    <div class="st-price">Từ 600.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 30 tháng 07, 2026</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="event-section container">
+        <div class="section-header-flex">
+            <h2 class="section-title">Khác</h2>
+            <a href="Khac.html" class="see-more-link" title="Xem tất cả Khác">
+                <i class="fa-solid fa-chevron-right"></i>
+            </a>
+        </div>
+        
+        <div class="static-grid-4">
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg1">Ảnh Nhạc Sống 1</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Đêm nhạc Acoustic Mùa Thu</h3>
+                    <div class="st-price">Từ 200.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 05 tháng 06, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg2">Ảnh Nhạc Sống 2</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Live in Hanoi: The Chill Night</h3>
+                    <div class="st-price">Từ 350.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 12 tháng 06, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg3">Ảnh Nhạc Sống 3</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Rock Show: Bùng Cháy Đam Mê</h3>
+                    <div class="st-price">Từ 500.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 20 tháng 06, 2026</div>
+                </div>
+            </div>
+            <div class="standard-card">
+                <div class="st-img-wrapper"><div class="st-img placeholder-bg1">Ảnh Nhạc Sống 4</div></div>
+                <div class="st-info">
+                    <h3 class="st-title">Minishow Ca sĩ Khách mời Đặc biệt</h3>
+                    <div class="st-price">Từ 800.000đ</div>
+                    <div class="st-date"><i class="fa-regular fa-calendar-days"></i> 25 tháng 06, 2026</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    
+
+
+
+
+
+
+
+<!--chân trang giữ nguyên trong mọi trang-->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-col">
+                    <h4>Hotline</h4>
+                    <p>
+                        <span>[Icon Điện thoại]</span> 
+                        Thứ 2 - Chủ Nhật (8:00 - 23:00)
+                    </p>
+                    <p class="hotline-number">1900.6408</p>
+
+                    <h4>Email</h4>
+                    <p>
+                        <span>[Icon Email]</span> 
+                        builienphuongsupport@spoton.vn
+                    </p>
+
+                    <h4>Văn phòng chính</h4>
+                    <p>
+                        <span>[Icon Vị trí]</span> 
+                        200 Hàng Bông, Hoàn Kiếm, Hà Nội
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Dành cho Khách hàng</h4>
+                    <ul>
+                        <li><a href="#">Điều khoản sử dụng cho khách hàng</a></li>
+                    </ul>
+
+                    <h4>Dành cho Ban Tổ chức</h4>
+                    <ul>
+                        <li><a href="#">Điều khoản sử dụng cho ban tổ chức</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Về công ty chúng tôi</h4>
+                    <ul>
+                        <li><a href="#">Quy chế hoạt động</a></li>
+                        <li><a href="#">Chính sách bảo mật thông tin</a></li>
+                        <li><a href="#">Cơ chế giải quyết tranh chấp/ khiếu nại</a></li>
+                        <li><a href="#">Chính sách bảo mật thanh toán</a></li>
+                        <li><a href="#">Chính sách đổi trả và kiểm hàng</a></li>
+                        <li><a href="#">Điều kiện vận chuyển và giao nhận</a></li>
+                        <li><a href="#">Phương thức thanh toán</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="footer-divider">
+
+            <div class="footer-bottom">
+                <div class="footer-col">
+                    <h4>Ứng dụng SpotOn</h4>
+                    <div class="app-links">
+                        <a href="#">[Ảnh Google Play]</a>
+                        <a href="#">[Ảnh App Store]</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Ứng dụng check-in cho Ban tổ chức</h4>
+                    <div class="app-links">
+                        <a href="#">[Ảnh Google Play]</a>
+                        <a href="#">[Ảnh App Store]</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Follow us</h4>
+                    <div class="social-links">
+                        <a href="#">[FB]</a>
+                        <a href="#">[IG]</a>
+                        <a href="#">[Tik]</a>
+                        <a href="#">[In]</a>
+                    </div>
+
+                    <h4>Ngôn ngữ</h4>
+                    <div class="language-links">
+                        <a href="#">[Cờ VN]</a>
+                        <a href="#">[Cờ UK]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="assets/js/nhap.js"></script>
+
+</body>
+</html>
