@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // ========================================================
+    // PHẦN 0: KHỞI TẠO KIỂM TRA ĐĂNG NHẬP
+    // ========================================================
+    renderAuthArea();
 
     // ========================================================
     // PHẦN 1: BANNER CHÍNH QUAY VÒNG (CAROUSEL TRÊN CÙNG)
@@ -91,15 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const listTotalOriginal = listCards.length;
         if (listTotalOriginal === 0) return;
 
-        // TỰ ĐỘNG PHÂN LOẠI: Kiểm tra xem section này có thẻ xếp hạng (rank) không
         const isTrendingSection = section.querySelector('.rank-number') !== null;
 
         if (isTrendingSection) {
             // ----------------------------------------------------
             // LOGIC A: KHÔNG XOAY VÒNG (Dành riêng cho Sự kiện xu hướng)
             // ----------------------------------------------------
-            
-            // Ép CSS trực tiếp bằng JS để vô hiệu hóa transform xoay vòng
             sliderTrack.style.width = 'auto';
             sliderTrack.style.overflowX = 'auto';
             sliderTrack.style.transform = 'none';
@@ -125,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
 
-                // Ẩn mờ nút khi cuộn kịch kim 2 đầu
                 if(listPrevBtn) listPrevBtn.style.opacity = sliderTrack.scrollLeft <= 0 ? '0.3' : '1';
                 if(listNextBtn) listNextBtn.style.opacity = sliderTrack.scrollLeft >= (sliderTrack.scrollWidth - sliderTrack.clientWidth - 5) ? '0.3' : '1';
             };
@@ -137,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (listNextBtn) listNextBtn.addEventListener('click', () => sliderTrack.scrollBy({ left: sliderTrack.clientWidth, behavior: 'smooth' }));
             if (listPrevBtn) listPrevBtn.addEventListener('click', () => sliderTrack.scrollBy({ left: -sliderTrack.clientWidth, behavior: 'smooth' }));
 
-            // Xử lý kéo thả bằng scrollLeft
             let isDown = false;
             let startX, scrollLeft;
 
@@ -260,4 +259,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+// ========================================================
+// PHẦN 3: CÁC HÀM XỬ LÝ AUTH (NẰM NGOÀI CÙNG ĐỂ DỄ GỌI)
+// ========================================================
 
+function renderAuthArea() {
+    const authArea = document.getElementById('auth-area');
+    if (!authArea) return; 
+
+    // Lấy trạng thái đăng nhập từ bộ nhớ trình duyệt
+    const isLoggedIn = localStorage.getItem('isLoggedIn'); 
+
+    if (isLoggedIn) {
+        // NẾU ĐÃ ĐĂNG NHẬP: Dùng JS để vẽ lại toàn bộ cụm "Tài khoản" và menu thả xuống
+        authArea.innerHTML = `
+            <div class="user-account-wrapper" style="position: relative; display: flex; align-items: center;">
+                <a href="#" class="user-title" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 5px; padding: 10px 0;">
+                    <i class="fa-solid fa-circle-user"></i> Tài khoản <i class="fa-solid fa-caret-down" style="font-size: 12px;"></i>
+                </a>
+                
+                <ul class="dropdown-account">
+                    <li><a href="#"><i class="fa-regular fa-address-card" style="width: 20px;"></i> Thông tin cá nhân</a></li>
+                    <li><a href="#"><i class="fa-solid fa-clock-rotate-left" style="width: 20px;"></i> Lịch sử đặt vé</a></li>
+                    <li><a href="#"><i class="fa-solid fa-gear" style="width: 20px;"></i> Sự kiện của tôi</a></li>
+                    <li class="logout-line"><a href="#" id="btn-logout"><i class="fa-solid fa-arrow-right-from-bracket" style="width: 20px;"></i> Đăng xuất</a></li>
+                </ul>
+            </div>
+        `;
+
+        // Bắt sự kiện click cho nút Đăng xuất vừa được tạo ra
+        const btnLogout = document.getElementById('btn-logout');
+        if (btnLogout) {
+            btnLogout.addEventListener('click', function(e) {
+                e.preventDefault(); 
+                logout();
+            });
+        }
+
+    } else {
+        // NẾU CHƯA ĐĂNG NHẬP: Vẽ ra nút Đăng nhập và Đăng ký
+        authArea.innerHTML = `
+            <a href="login.html" style="color: white; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-user"></i> Đăng nhập</a>
+            <span style="color: white;">|</span>
+            <a href="register.html" style="color: white; text-decoration: none; font-weight: bold;">Đăng ký</a>
+        `;
+    }
+}
+
+function logout() {
+    // 1. Xóa cờ đánh dấu đăng nhập
+    localStorage.removeItem('isLoggedIn');
+    
+    // 2. Chuyển hướng người dùng thẳng về trang index.html
+    window.location.href = 'index.html'; 
+}
