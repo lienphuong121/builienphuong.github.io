@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration </title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap');
+
+        :root {
+            --bg: #03000a;
+            --accent-cyan: #00d2ff;
+            --accent-purple: #9d50bb;
+            --error: #ff3366;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0; padding: 40px 20px; min-height: 100vh;
+            background-color: var(--bg); color: #fff;
+            display: flex; justify-content: center; align-items: center;
+            overflow-x: hidden;
+        }
+
+        .background-effect {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 20% 30%, #1a2a6c 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, #6e1a6c 0%, transparent 40%);
+            filter: blur(100px); opacity: 0.4;
+        }
+
+        .main-container {
+            display: grid; grid-template-columns: 1.1fr 0.9fr;
+            width: 95%; max-width: 1100px;
+            background: var(--glass); backdrop-filter: blur(40px);
+            border: 1px solid var(--border); border-radius: 40px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            overflow: hidden;
+            height: 670px;
+             
+        }
+
+        .left-side, .right {
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .left-side { border-right: 1px solid var(--border); }
+        
+        h2.title {
+    font-family: 'Orbitron', sans-serif; 
+    font-size: 1.8rem;
+    background: linear-gradient(90deg, #00d2ff, #9d50bb) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important; 
+    -webkit-text-fill-color: transparent !important; 
+    color: transparent !important; 
+
+    margin: 0 0 40px 0; 
+    text-transform: uppercase; 
+    letter-spacing: 5px;
+}
+
+
+        .form-row { display: grid; grid-template-columns: 130px 1fr; align-items: center; gap: 15px; margin-bottom: 22px; }
+        .label { font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.5; font-weight: 700; }
+
+        .input-wrapper { position: relative; width: 100%; }
+        
+        input[type="text"], input[type="password"], select {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            border-radius: 12px; padding: 12px 40px 12px 18px; color: #fffffffb; outline: none;
+            transition: all 0.3s; width: 100%; box-sizing: border-box;
+        }
+        select option {
+        background-color:  #030c30; 
+        color: #fff;              
+        padding: 10px;
+      }
+
+        .toggle-eye {
+            position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+            cursor: pointer; opacity: 0.5; font-size: 1rem;
+        }
+
+        .flex-box { display: flex; gap: 12px; }
+
+    
+       
+        .right { background: rgba(0,0,0,0.2); }
+        .info-header { font-family: 'Orbitron'; font-size: 0.85rem; color: var(--accent-cyan); margin-bottom: 25px; letter-spacing: 2px; display: flex; align-items: center; gap: 12px; }
+        .info-header::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--accent-cyan), transparent); }
+
+        .interest-grid { display: flex; flex-direction: column; gap: 10px; }
+
+        .check-item { 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 14px 20px; background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+            border-radius: 15px; font-size: 0.9rem; cursor: pointer; transition: 0.3s;
+        }
+        .check-item:hover { background: rgba(255,255,255,0.06); border-color: var(--accent-cyan); }
+        
+        input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--accent-cyan); }
+
+        .register-btn {
+            width: 100%; margin-top: 30; padding: 20px;
+            background: #ff00cc; 
+            border: none; border-radius: 15px; color: #fff; font-family: 'Orbitron';
+            font-weight: 700; cursor: pointer; transition: 0.4s; letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+    
+        .status-footer {
+            margin-top: 30px; 
+            padding-top: 20px; 
+            border-top: 1px solid var(--border); 
+            font-size: 0.65rem; 
+            opacity: 0.4; 
+            letter-spacing: 2px;
+            line-height: 1.6;
+        }
+
+        #success-toast, #error-toast {
+            position: fixed; bottom: -100px; right: 40px;
+            backdrop-filter: blur(20px); padding: 18px 30px; border-radius: 20px;
+            display: flex; align-items: center; gap: 15px; transition: 0.5s;
+        }
+        .show { bottom: 40px !important; }
+
+        @media (max-width: 900px) { .main-container { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="background-effect"></div>
+
+<div class="main-container">
+    <div class="left-side">
+        <h2 class="title">Registration</h2>
+        <form id="regForm" onsubmit="handleRegister(event)" style="display: contents;">
+            <div class="form-row">
+                <label>Username</label>
+                <input type="text" placeholder="PhuongUser_01" required>
+            </div>
+            
+            <div class="form-row">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="p1" placeholder="••••••••" required>
+                    <span class="toggle-eye" onclick="togglePass('p1')">👁️</span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>Confirm</label>
+                <div class="input-wrapper">
+                    <input type="password" id="p2" placeholder="••••••••" required>
+                    <span class="toggle-eye" onclick="togglePass('p2')">👁️</span>
+                </div>
+            </div>
+
+            <div style="margin: 30px 0; border-top: 1px solid var(--border);"></div>
+
+            <div class="form-row">
+                <label>Birthday</label>
+                <div class="flex-box">
+                    <select id="monthSelect" style="flex: 2;"></select>
+                    <input type="text" id="birth_day" placeholder="DD" style="flex: 1; text-align: center;">
+                    <input type="text" id="birth_year" placeholder="YYYY" style="flex: 1.5; text-align: center;">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>Image</label>
+                <input type="file" style="font-size: 0.75rem;">
+            </div>
+
+            <div class="form-row">
+                <label>Full Name</label>
+                <div class="flex-box">
+                    <input type="text" id="first_name" placeholder="First name">
+                    <input type="text" id="last_name" placeholder="Last name">
+                </div>
+            </div>
+
+            <button type="submit" class="register-btn">INITIALIZE ACCOUNT</button>
+        </form>
+    </div>
+
+    <div class="right">
+        <div class="info-header">DATABASE LOG</div>
+        <p style="font-size: 0.8rem; opacity: 0.5; margin-bottom: 35px;">
+            Xác định Interests để thiết lập luồng dữ liệu tối ưu.
+        </p>
+
+        <div class="info-header">INTERESTS SECTION</div>
+        <div class="interest-grid">
+            <label class="check-item"><span>ENTERTAINMENT</span><input type="checkbox"></label>
+            <label class="check-item"><span>BUSINESS STRATEGY</span><input type="checkbox"></label>
+            <label class="check-item"><span>TECHNOLOGY</span><input type="checkbox"></label>
+            <label class="check-item"><span>CYBER SECURITY</span><input type="checkbox"></label>
+            <label class="check-item"><span>MUSIC & ARTS</span><input type="checkbox"></label>
+        </div>
+        
+        <div class="status-footer">
+            STATUS: READY_TO_INITIALIZE<br>
+            ENCRYPTION: AES-256_ENABLED
+        </div>
+    </div>
+</div>
+
+<div id="success-toast" style="border: 1px solid var(--accent-cyan); background: rgba(0, 210, 255, 0.1);">
+    <div style="background: var(--accent-cyan); color: #000; border-radius: 50%; width: 25px; height: 25px; text-align: center; line-height: 25px; font-weight: bold;">✓</div>
+    <div><b>SUCCESS</b><br><span style="font-size: 0.8rem;">Đăng ký thành công!</span></div>
+</div>
+
+<script>
+    const monthSelect = document.getElementById('monthSelect');
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    monthSelect.innerHTML = '<option disabled selected>Month</option>' + months.map((m, i) => `<option value="${i+1}">${m}</option>`).join('');
+
+    function togglePass(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    function handleRegister(e) {
+        e.preventDefault();
+        const toast = document.getElementById('success-toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+function handleRegister(e) {
+    e.preventDefault();
+    
+
+    const p1 = document.getElementById('p1').value;
+    const p2 = document.getElementById('p2').value;
+    const day = document.getElementById('birth_day').value;
+    const year = document.getElementById('birth_year').value;
+    const monthIdx = document.getElementById('monthSelect').selectedIndex;
+
+    
+    if (p1 !== p2) {
+        showToast('error-toast', 'Mật khẩu không trùng khớp!');
+        return;
+    }
+
+    
+    if (monthIdx === 0) { 
+        showToast('error-toast', 'Vui lòng chọn tháng sinh!');
+        return;
+    }
+
+
+    const dayRegex = /^[0-9]{2}$/;
+    if (!dayRegex.test(day) || parseInt(day) < 1 || parseInt(day) > 31) {
+        showToast('error-toast', 'Ngày sinh phải là 2 chữ số (01-31)!');
+        return;
+    }
+
+
+    const yearNum = parseInt(year);
+    if (!/^[0-9]{4}$/.test(year) || yearNum < 1900 || yearNum > 2050) {
+        showToast('error-toast', 'Năm sinh phải là 4 số (1900-2050)!');
+        return;
+    }
+
+
+    const interests = [];
+    document.querySelectorAll('.interest-grid input:checked').forEach(cb => {
+        interests.push(cb.parentElement.innerText.trim());
+    });
+
+    const newUser = {
+        id: Date.now(),
+        username: document.querySelector('input[placeholder="PhuongUser_01"]').value,
+        fname: document.getElementById('first_name').value,
+        lname: document.getElementById('last_name').value,
+        birthday: day + " " + document.getElementById('monthSelect').options[monthIdx].text + " " + year,
+        interests: interests
+    };
+
+    const users = JSON.parse(localStorage.getItem('phuong_users') || '[]');
+    users.push(newUser);
+    localStorage.setItem('phuong_users', JSON.stringify(users));
+
+    showToast('success-toast', 'Đăng ký thành công!');
+    setTimeout(() => { location.reload(); }, 2000);
+}
+
+
+function showToast(id, message) {
+    const toast = document.getElementById(id);
+    if(id === 'error-toast') {
+        toast.querySelector('div:last-child div:last-child').innerText = message;
+    }
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+</script>
+<div id="error-toast" style="position: fixed; bottom: -100px; right: 40px; backdrop-filter: blur(20px); padding: 18px 30px; border-radius: 20px; display: flex; align-items: center; gap: 15px; transition: 0.5s; border: 1px solid var(--error); background: rgba(255, 51, 102, 0.1); z-index: 1000;">
+    <div style="background: var(--error); color: #fff; border-radius: 50%; width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold;">!</div>
+    <div>
+        <div style="font-weight: bold; color: var(--error);">ERROR</div>
+        <div style="font-size: 0.8rem;">Mật khẩu không trùng khớp!</div>
+    </div>
+</div>
+</body>
+</html>
