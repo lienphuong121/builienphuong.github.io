@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600&display=swap');
+
+        :root {
+            --bg: #050505;
+            --accent: #00d2ff;
+            --error: #ff3333;
+            --warning: #f39c12;
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0; min-height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            background-color: var(--bg); color: #fff; padding: 20px;
+        }
+
+        .aurora {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 15% 15%, #1a2a6c 0%, transparent 35%),
+                        radial-gradient(circle at 85% 85%, #b21f1f 0%, transparent 35%);
+            filter: blur(80px); opacity: 0.35;
+        }
+
+        .container {
+            display: grid; grid-template-columns: 1fr 320px;
+            width: 100%; max-width: 1000px; height: 600px; 
+            background: var(--glass-bg); backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border); border-radius: 28px;
+            overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+        }
+
+     
+        .main-calc { 
+            padding: 40px 60px; 
+            border-right: 1px solid var(--glass-border); 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+        }
+
+        h2 { 
+            font-weight: 200; font-size: 0.7rem; letter-spacing: 5px; 
+            text-transform: uppercase; margin: 0 0 40px 0; opacity: 0.5; text-align: center; 
+        }
+
+        .input-field { margin-bottom: 20px; }
+        label { font-size: 0.6rem; letter-spacing: 2px; color: rgba(255,255,255,0.4); display: block; margin-bottom: 8px; font-weight: 600; }
+
+        input {
+            width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--glass-border);
+            padding: 10px 0; color: #fff; font-size: 1.2rem; font-weight: 300; outline: none; transition: 0.3s;
+        }
+        input:focus { border-bottom-color: var(--accent); }
+        input.invalid { border-bottom-color: var(--error); }
+
+        .result-view { 
+    font-size: 4.5rem; 
+    font-weight: 200; 
+    text-align: center; 
+    margin: -5px 0 20px 0; 
+    color: var(--accent); 
+    min-height: 1.1em; 
+    line-height: 1;
+}
+
+        .grid-ops { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+        .btn {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+            border-radius: 12px; padding: 15px; color: #fff; cursor: pointer; transition: 0.2s;
+        }
+        .btn.active { background: #fff; color: #000; font-weight: 600; }
+
+        .btn-calc {
+            grid-column: span 5; background: var(--accent); color: #000;
+            border: none; font-weight: 600; letter-spacing: 2px; margin-top: 15px;
+            text-transform: uppercase; font-size: 0.8rem; padding: 18px; border-radius: 15px; cursor: pointer;
+        }
+        .btn-calc:disabled { opacity: 0.1; cursor: not-allowed; }
+
+        /* LOG PANEL */
+        .history-panel { padding: 30px; background: rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; }
+        .history-header { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 0.65rem; letter-spacing: 2px; opacity: 0.4; }
+        
+        #error-zone { min-height: 85px; } 
+        
+        .alert-item {
+            background: rgba(243, 156, 18, 0.15); border: 1px solid var(--warning);
+            border-radius: 14px; padding: 15px; display: flex; align-items: center; gap: 12px;
+            animation: slideIn 0.2s ease-out;
+        }
+        .alert-icon {
+            width: 22px; height: 22px; background: var(--warning); border-radius: 50%;
+            color: #000; display: flex; align-items: center; justify-content: center; font-weight: 800;
+        }
+
+        #logs { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+        .history-item { 
+            font-size: 0.85rem; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.03); 
+            color: rgba(255,255,255,0.5); display: flex; justify-content: space-between;
+        }
+        .history-item b { color: var(--accent); }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        #logs::-webkit-scrollbar { width: 4px; }
+        #logs::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="aurora"></div>
+
+<div class="container">
+    <div class="main-calc">
+        <h2>Compute Terminal</h2>
+        <div class="input-field">
+            <label>PARAMETER ALPHA (A)</label>
+            <input type="text" id="a" placeholder="0.00" oninput="validateSystem()">
+        </div>
+        <div class="input-field">
+            <label>PARAMETER BETA (B)</label>
+            <input type="text" id="b" placeholder="0.00" oninput="validateSystem()">
+        </div>
+
+        <div class="result-view" id="res">0</div>
+
+        <div class="grid-ops">
+            <button class="btn active" onclick="setOp(this, '+')">+</button>
+            <button class="btn" onclick="setOp(this, '-')">−</button>
+            <button class="btn" onclick="setOp(this, '*')">×</button>
+            <button class="btn" onclick="setOp(this, '/')">÷</button>
+            <button class="btn" onclick="setOp(this, '%')">%</button>
+            <button class="btn btn-calc" id="run" onclick="executeCompute()" disabled>Execute Compute</button>
+        </div>
+    </div>
+
+    <div class="history-panel">
+        <div class="history-header">
+            <span>CORE_LOGS</span>
+            <span style="cursor:pointer; color:var(--error)" onclick="document.getElementById('logs').innerHTML=''">PURGE</span>
+        </div>
+        <div id="error-zone"></div>
+        <div id="logs"></div>
+    </div>
+</div>
+
+<script>
+    let currentOp = '+';
+
+    function validateSystem() {
+        const inA = document.getElementById('a'), inB = document.getElementById('b'), 
+              btn = document.getElementById('run'), errZone = document.getElementById('error-zone');
+        let errorMsg = "";
+        
+        const isANum = inA.value === "" || !isNaN(inA.value);
+        const isBNum = inB.value === "" || !isNaN(inB.value);
+
+        if (!isANum || !isBNum) {
+            errorMsg = "a & b must be a number!";
+            if (!isANum) inA.classList.add('invalid');
+            if (!isBNum) inB.classList.add('invalid');
+        } else {
+            inA.classList.remove('invalid'); inB.classList.remove('invalid');
+            if (currentOp === '/' && parseFloat(inB.value) === 0) errorMsg = "b can't be 0!";
+        }
+
+        if (errorMsg) {
+            errZone.innerHTML = `<div class="alert-item"><div class="alert-icon">!</div><div class="alert-text">${errorMsg}</div></div>`;
+            btn.disabled = true;
+        } else {
+            errZone.innerHTML = '';
+            btn.disabled = (inA.value === "" || inB.value === "");
+        }
+    }
+
+    function setOp(btn, op) {
+        document.querySelectorAll('.btn').forEach(x => x.classList.remove('active'));
+        btn.classList.add('active');
+        currentOp = op;
+        validateSystem();
+    }
+
+    function executeCompute() {
+        const vA = parseFloat(document.getElementById('a').value), vB = parseFloat(document.getElementById('b').value);
+        const logsContainer = document.getElementById('logs');
+        let r = 0;
+        switch(currentOp) {
+            case '+': r = vA + vB; break;
+            case '-': r = vA - vB; break;
+            case '*': r = vA * vB; break;
+            case '/': r = vA / vB; break;
+            case '%': r = vA % vB; break;
+        }
+        if (r % 1 !== 0) r = parseFloat(r.toFixed(4));
+        document.getElementById('res').innerText = r;
+
+        const displayOp = currentOp === '*' ? '×' : currentOp === '/' ? '÷' : currentOp;
+        const log = document.createElement('div');
+        log.className = 'history-item';
+        log.innerHTML = `<span>${vA} ${displayOp} ${vB}</span> <b>${r}</b>`;
+        logsContainer.append(log);
+        logsContainer.scrollTop = logsContainer.scrollHeight;
+    }
+</script>
+</body>
+</html>

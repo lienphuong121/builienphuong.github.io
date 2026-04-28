@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Analyzer </title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600&display=swap');
+
+        :root {
+            --bg: #030303;
+            --even: #10b981;
+            --odd: #3b82f6;
+            --prime: #fbbf24; 
+            --error: #ef4444;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0; min-height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            background: var(--bg); color: #fff;
+            overflow: hidden;
+        }
+
+     
+        .aurora {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            filter: blur(120px); opacity: 0.25; transition: 1s;
+        }
+
+        .container {
+            width: 450px; padding: 60px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            text-align: center;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+            transition: 0.5s;
+        }
+
+       
+        .container.prime-glow {
+            border-color: var(--prime);
+            box-shadow: 0 0 40px rgba(251, 191, 36, 0.2), 0 50px 100px rgba(0,0,0,0.9);
+        }
+
+        h2 { font-weight: 200; letter-spacing: 10px; opacity: 0.4; font-size: 0.7rem; margin-bottom: 50px; }
+
+        input {
+            width: 100%; background: transparent; border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 0; color: #fff; font-size: 3rem;
+            font-weight: 100; text-align: center; outline: none; transition: 0.4s;
+        }
+        input:focus { border-bottom-color: #fff; }
+        input.invalid { border-bottom-color: var(--error); color: var(--error); animation: shake 0.4s; }
+
+        @keyframes shake { 0%, 100% {transform: translateX(0)} 25% {transform: translateX(-5px)} 75% {transform: translateX(5px)} }
+
+        
+        .badges { display: flex; justify-content: center; gap: 10px; margin: 30px 0; min-height: 30px; }
+        
+        .badge {
+            padding: 6px 15px; border-radius: 12px; font-size: 0.6rem;
+            font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+            opacity: 0; transform: translateY(10px); transition: 0.4s;
+        }
+
+        .badge.show { opacity: 1; transform: translateY(0); }
+        .b-even { background: var(--even); color: #000; }
+        .b-odd { background: var(--odd); color: #fff; }
+        .b-prime { background: var(--prime); color: #000; box-shadow: 0 0 15px var(--prime); }
+
+        .description {
+            font-size: 0.9rem; font-weight: 300; min-height: 1.5em;
+            color: rgba(255,255,255,0.5); transition: 0.5s;
+        }
+
+        .is-error .description { color: var(--error); opacity: 1; }
+    </style>
+</head>
+<body id="body">
+
+<div class="aurora" id="bg"></div>
+
+<div class="container" id="card">
+    <h2>DATA ANALYZER</h2>
+    
+    <div class="input-box">
+        <input type="text" id="val" placeholder="..." autocomplete="off" oninput="process()">
+    </div>
+
+    <div class="badges">
+        <div id="badge-parity" class="badge"></div>
+        <div id="badge-prime" class="badge b-prime">Prime Number</div>
+    </div>
+
+    <div class="description" id="info">Hãy nhập một số nguyên dương</div>
+</div>
+
+<script>
+  
+    function isPrime(n) {
+        if (n < 2) return false;
+        for (let i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i === 0) return false;
+        }
+        return true;
+    }
+
+    function process() {
+        const input = document.getElementById('val');
+        const card = document.getElementById('card');
+        const bg = document.getElementById('bg');
+        const info = document.getElementById('info');
+        const bParity = document.getElementById('badge-parity');
+        const bPrime = document.getElementById('badge-prime');
+        
+        const raw = input.value;
+
+       
+        input.classList.remove('invalid');
+        bParity.className = 'badge';
+        bPrime.classList.remove('show');
+        card.classList.remove('prime-glow');
+        bg.style.background = '';
+
+        if (raw === "") {
+            info.innerText = "Hãy nhập một số nguyên dương";
+            return;
+        }
+
+        if (isNaN(raw) || raw.includes('.') || parseInt(raw) < 0) {
+            input.classList.add('invalid');
+            info.innerText = "Yêu cầu số nguyên dương!";
+            return;
+        }
+
+        const n = parseInt(raw);
+        
+       
+        if (n % 2 === 0) {
+            bParity.innerText = "Even";
+            bParity.classList.add('badge', 'b-even', 'show');
+            bg.style.background = 'radial-gradient(circle, var(--even) 0%, transparent 70%)';
+        } else {
+            bParity.innerText = "Odd";
+            bParity.classList.add('badge', 'b-odd', 'show');
+            bg.style.background = 'radial-gradient(circle, var(--odd) 0%, transparent 70%)';
+        }
+
+       
+        if (isPrime(n)) {
+            bPrime.classList.add('show');
+            card.classList.add('prime-glow');
+            bg.style.background = 'radial-gradient(circle, var(--prime) 0%, transparent 70%)';
+            info.innerHTML = `Con số <b style="color:white">${n}</b> là một số nguyên tố quý giá.`;
+        } else {
+            info.innerHTML = `Phân tích hoàn tất cho giá trị <b style="color:white">${n}</b>.`;
+        }
+    }
+</script>
+
+</body>
+</html>
